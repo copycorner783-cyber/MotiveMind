@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quotes App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            width: 380px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: scale(0.9);} 
+            to {opacity: 1; transform: scale(1);} 
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #quote {
+            font-size: 18px;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        select, button {
+            margin: 10px 0;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quotes App</h1>
+
+        <select id="category" onchange="newQuote()">
+            <option value="motivation">Motivation</option>
+            <option value="life">Life</option>
+            <option value="love">Love</option>
+            <option value="islamic">Islamic</option>
+        </select>
+
+        <p id="quote">Choose a category to get a quote.</p>
+
+        <button onclick="newQuote()">New Quote</button>
+
+        <div class="btn-row">
+            <button class="btn-small" onclick="copyQuote()">Copy</button>
+            <button class="btn-small" onclick="shareQuote()">Share</button>
+        </div>
+    </div>
+
+    <script>
+        const quotes = {
+            motivation: [
+                "Believe you can and you're halfway there.",
+                "Success is not final, failure is not fatal.",
+                "Dream big and dare to fail."
+            ],
+
+            life: [
+                "Life is what happens when you're busy making other plans.",
+                "Enjoy every moment you live.",
+                "Life is short, make it sweet."
+            ],
+
+            love: [
+                "Love is the beauty of the soul.",
+                "Where there is love, there is life.",
+                "You are my today and all of my tomorrows."
+            ],
+
+            islamic: [
+                "Allah is with the patient.",
+                "And He is the best of planners.",
+                "Verily, with hardship comes ease."
+            ]
+        };
+
+        function newQuote() {
+            const cat = document.getElementById("category").value;
+            const list = quotes[cat];
+            const randomIndex = Math.floor(Math.random() * list.length);
+            document.getElementById("quote").textContent = list[randomIndex];
+        }
+
+        function copyQuote() {
+            const text = document.getElementById("quote").textContent;
+            navigator.clipboard.writeText(text);
+            alert("Quote copied!");
+        }
+
+        function shareQuote() {
+            const text = document.getElementById("quote").textContent;
+            if (navigator.share) {
+                navigator.share({text});
+            } else {
+                alert("Sharing not supported on this device.");
+            }
+        }
+    </script>
+</body>
+</html>
